@@ -4,7 +4,7 @@
 
 // Supabase Config
 const SUPABASE_URL = 'https://jcyzxfxtiwxblcvtftib.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjYXp4ZmR0aXd4YmxjdnRmdGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ2MjU2MTYsImV4cCI6MjA2MDIwMTYxNn0.6pqualL0kARe0BkIO9y0W0OKbTF0XSgKjM9pN5c3kZk';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjYXp4Znh0aXd4YmxjdnRmdGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NDQzMjgsImV4cCI6MjA5MDQyMDMyOH0.0aDnxJeUDK1W9aVujzynq3IzJgLE5ztAhpDydAV7Vak';
 const TABLE_NAME = 'trips';
 
 let currentMonth = new Date();
