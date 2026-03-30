@@ -3,8 +3,8 @@
    ======================================== */
 
 // Supabase Config
-const SUPABASE_URL = 'https://jcyzxfxtiwxblcvtftib.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpjYXp4Znh0aXd4YmxjdnRmdGliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NDQzMjgsImV4cCI6MjA5MDQyMDMyOH0.0aDnxJeUDK1W9aVujzynq3IzJgLE5ztAhpDydAV7Vak';
+const SUPABASE_URL = 'https://mwmyxizvyurvkcgvfbqh.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im13bXl4aXp2eXVydmtjZ3ZmYnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4NDgyODUsImV4cCI6MjA5MDQyNDI4NX0.mM4jAye3kltxUKvaafK_MEqxM9r56H9Jw-uVDXM_Vsc';
 const TABLE_NAME = 'trips';
 
 let currentMonth = new Date();
