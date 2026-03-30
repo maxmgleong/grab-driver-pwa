@@ -19,7 +19,6 @@
       <div class="header-actions">
         <button class="btn-icon" onclick="exportData()" title="导出数据">📤</button>
         <button class="btn-icon" onclick="importData()" title="导入数据">📥</button>
-        <button class="btn-icon" onclick="syncToCloud()" id="syncBtn" title="同步云端">🔄</button>
         <button class="btn-icon" onclick="clearAllData()" title="清空数据">🗑️</button>
       </div>
     </header>
@@ -111,30 +110,11 @@
       </div>
     </div>
 
-    <!-- Cloud Config -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection('cloudConfig')">
-        ☁️ 云端同步设置
-        <span class="toggle-icon" id="cloudConfigIcon">▼</span>
-      </div>
-      <div class="section-content" id="cloudConfig">
-        <div class="form-row">
-          <label>API 地址</label>
-          <input type="url" id="cloudApi" placeholder="https://your-api.com/sync" onchange="saveCloudConfig()">
-        </div>
-        <div class="form-row">
-          <label>API Key</label>
-          <input type="password" id="cloudKey" placeholder="Your API Key" onchange="saveCloudConfig()">
-        </div>
-        <div class="cloud-status" id="cloudStatus">⚪ 未配置云端同步</div>
-        <button class="btn-secondary" onclick="testCloudConnection()">🔗 测试连接</button>
-      </div>
-    </div>
+
 
     <!-- Footer -->
     <footer class="footer">
       <div>Grab 司机工作记录 PWA v1.0 🦐</div>
-      <div id="lastSync">未同步</div>
     </footer>
   </div>
 
