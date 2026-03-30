@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#00A651">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Grab 司机工作记录</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-logo">🚖 Grab 司机记账</div>
+      <div class="header-actions">
+        <button class="btn-icon" onclick="exportData()" title="导出数据">📤</button>
+        <button class="btn-icon" onclick="importData()" title="导入数据">📥</button>
+        <button class="btn-icon" onclick="syncToCloud()" id="syncBtn" title="同步云端">🔄</button>
+        <button class="btn-icon" onclick="clearAllData()" title="清空数据">🗑️</button>
+      </div>
+    </header>
+
+    <!-- Monthly Selector -->
+    <div class="month-selector">
+      <button class="btn-month" onclick="changeMonth(-1)">◀</button>
+      <span id="currentMonth" class="current-month"></span>
+      <button class="btn-month" onclick="changeMonth(1)">▶</button>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-grid">
+      <div class="summary-card green">
+        <div class="card-label">💰 总收入</div>
+        <div class="card-value" id="totalIncome">RM 0.00</div>
+      </div>
+      <div class="summary-card blue">
+        <div class="card-label">📅 工作天数</div>
+        <div class="card-value" id="totalDays">0 天</div>
+      </div>
+      <div class="summary-card orange">
+        <div class="card-label">🚗 总趟数</div>
+        <div class="card-value" id="totalTrips">0 趟</div>
+      </div>
+      <div class="summary-card purple">
+        <div class="card-label">⚡ 日均收入</div>
+        <div class="card-value" id="dailyAvg">RM 0.00</div>
+      </div>
+      <div class="summary-card red">
+        <div class="card-label">⏱️ 日均时长</div>
+        <div class="card-value" id="avgHours">0 小时</div>
+      </div>
+      <div class="summary-card teal">
+        <div class="card-label">📈 场均收入</div>
+        <div class="card-value" id="perTrip">RM 0.00</div>
+      </div>
+    </div>
+
+    <!-- Add Trip Form -->
+    <div class="section">
+      <div class="section-title" onclick="toggleSection('addForm')">
+        ➕ 记一趟
+        <span class="toggle-icon" id="addFormIcon">▼</span>
+      </div>
+      <div class="section-content" id="addForm">
+        <form id="tripForm" onsubmit="addTrip(event)">
+          <div class="form-row">
+            <label>日期</label>
+            <input type="date" id="tripDate" required>
+          </div>
+          <div class="form-row two-col">
+            <div>
+              <label>开车时间</label>
+              <input type="time" id="startTime" required>
+            </div>
+            <div>
+              <label>关车时间</label>
+              <input type="time" id="endTime" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>趟数</label>
+            <input type="number" id="trips" min="1" placeholder="今天跑了多少趟？" required>
+          </div>
+          <div class="form-row">
+            <label>收入 (RM)</label>
+            <input type="number" id="income" min="0" step="0.01" placeholder="今天总收入" required>
+          </div>
+          <div class="form-row">
+            <label>备注</label>
+            <input type="text" id="notes" placeholder="可选：高峰/雨季/故障等">
+          </div>
+          <button type="submit" class="btn-submit">✅ 保存记录</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Daily Records -->
+    <div class="section">
+      <div class="section-title" onclick="toggleSection('records')">
+        📋 每日记录
+        <span class="toggle-icon" id="recordsIcon">▼</span>
+      </div>
+      <div class="section-content" id="records">
+        <div id="recordsList" class="records-list">
+          <div class="empty-state">还没有记录，开始记第一趟吧 🚖</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cloud Config -->
+    <div class="section">
+      <div class="section-title" onclick="toggleSection('cloudConfig')">
+        ☁️ 云端同步设置
+        <span class="toggle-icon" id="cloudConfigIcon">▼</span>
+      </div>
+      <div class="section-content" id="cloudConfig">
+        <div class="form-row">
+          <label>API 地址</label>
+          <input type="url" id="cloudApi" placeholder="https://your-api.com/sync" onchange="saveCloudConfig()">
+        </div>
+        <div class="form-row">
+          <label>API Key</label>
+          <input type="password" id="cloudKey" placeholder="Your API Key" onchange="saveCloudConfig()">
+        </div>
+        <div class="cloud-status" id="cloudStatus">⚪ 未配置云端同步</div>
+        <button class="btn-secondary" onclick="testCloudConnection()">🔗 测试连接</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div>Grab 司机工作记录 PWA v1.0 🦐</div>
+      <div id="lastSync">未同步</div>
+    </footer>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>✏️ 编辑记录</span>
+        <button class="btn-close" onclick="closeEditModal()">×</button>
+      </div>
+      <form id="editForm" onsubmit="saveEdit(event)">
+        <input type="hidden" id="editId">
+        <div class="form-row">
+          <label>日期</label>
+          <input type="date" id="editDate" required>
+        </div>
+        <div class="form-row two-col">
+          <div>
+            <label>开车时间</label>
+            <input type="time" id="editStart" required>
+          </div>
+          <div>
+            <label>关车时间</label>
+            <input type="time" id="editEnd" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>趟数</label>
+          <input type="number" id="editTrips" min="1" required>
+        </div>
+        <div class="form-row">
+          <label>收入 (RM)</label>
+          <input type="number" id="editIncome" min="0" step="0.01" required>
+        </div>
+        <div class="form-row">
+          <label>备注</label>
+          <input type="text" id="editNotes">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-delete" onclick="deleteEditRecord()">🗑️ 删除</button>
+          <button type="submit" class="btn-submit">✅ 保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

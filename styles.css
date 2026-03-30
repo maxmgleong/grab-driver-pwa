@@ -1,0 +1,487 @@
+/* ========================================
+   Grab 司机工作记录 - PWA Styles
+   ======================================== */
+
+:root {
+  --grab-green: #00A651;
+  --grab-green-dark: #008545;
+  --grab-green-light: #e8f5ed;
+  --blue: #1E88E5;
+  --blue-light: #e3f2fd;
+  --orange: #FB8C00;
+  --orange-light: #fff3e0;
+  --purple: #8E24AA;
+  --purple-light: #f3e5f5;
+  --red: #E53935;
+  --red-light: #ffebee;
+  --teal: #00897B;
+  --teal-light: #e0f2f1;
+  --gray-dark: #333;
+  --gray: #666;
+  --gray-light: #f5f5f5;
+  --white: #fff;
+  --shadow: 0 2px 8px rgba(0,0,0,0.1);
+  --radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--gray-light);
+  color: var(--gray-dark);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+/* Header */
+.header {
+  background: var(--grab-green);
+  color: white;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.header-logo {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-icon:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+/* Month Selector */
+.month-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--white);
+  margin: 12px 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.btn-month {
+  background: var(--grab-green-light);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--grab-green);
+  font-weight: bold;
+}
+
+.btn-month:active {
+  background: var(--grab-green);
+  color: white;
+}
+
+.current-month {
+  font-size: 18px;
+  font-weight: 700;
+  min-width: 140px;
+  text-align: center;
+}
+
+/* Summary Grid */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.summary-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.summary-card .card-label {
+  font-size: 12px;
+  color: var(--gray);
+  margin-bottom: 6px;
+}
+
+.summary-card .card-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.summary-card.green .card-value { color: var(--grab-green); }
+.summary-card.blue .card-value { color: var(--blue); }
+.summary-card.orange .card-value { color: var(--orange); }
+.summary-card.purple .card-value { color: var(--purple); }
+.summary-card.red .card-value { color: var(--red); }
+.summary-card.teal .card-value { color: var(--teal); }
+
+/* Full width cards */
+.summary-card:first-child {
+  grid-column: 1 / -1;
+}
+
+.summary-card:first-child .card-value {
+  font-size: 28px;
+}
+
+/* Section */
+.section {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.section-title {
+  padding: 14px 16px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--white);
+  user-select: none;
+}
+
+.section-title:active {
+  background: var(--gray-light);
+}
+
+.toggle-icon {
+  font-size: 12px;
+  color: var(--gray);
+  transition: transform 0.2s;
+}
+
+.section-content {
+  padding: 0 16px 16px;
+  display: none;
+}
+
+.section-content.open {
+  display: block;
+}
+
+/* Form */
+.form-row {
+  margin-bottom: 12px;
+}
+
+.form-row label {
+  display: block;
+  font-size: 13px;
+  color: var(--gray);
+  margin-bottom: 4px;
+}
+
+.form-row input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: var(--grab-green);
+}
+
+.form-row.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background: var(--grab-green);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.2s;
+}
+
+.btn-submit:active {
+  background: var(--grab-green-dark);
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 10px;
+  background: var(--gray-light);
+  color: var(--gray-dark);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* Records List */
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.record-item {
+  background: var(--gray-light);
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+  position: relative;
+}
+
+.record-item:active {
+  transform: scale(0.98);
+}
+
+.record-item:hover {
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.record-date {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gray-dark);
+}
+
+.record-income {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--grab-green);
+}
+
+.record-details {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--gray);
+}
+
+.record-details span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.record-notes {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.record-delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.4;
+  padding: 4px;
+}
+
+.record-delete:hover {
+  opacity: 1;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--gray);
+  font-size: 14px;
+}
+
+/* Cloud Status */
+.cloud-status {
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+  color: var(--gray);
+  margin: 8px 0;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--gray);
+  font-size: 12px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--white);
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 0 0 24px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--gray-light);
+  font-weight: 600;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--gray);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn-delete {
+  flex: 1;
+  padding: 12px;
+  background: var(--red-light);
+  color: var(--red);
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal-actions .btn-submit {
+  flex: 2;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gray-dark);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 2000;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* PWA install banner */
+.pwa-banner {
+  background: var(--grab-green);
+  color: white;
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 13px;
+  position: sticky;
+  top: 60px;
+  z-index: 99;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.pwa-banner button {
+  background: white;
+  color: var(--grab-green);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 8px;
+  cursor: pointer;
+}
